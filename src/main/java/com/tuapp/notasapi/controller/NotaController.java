@@ -41,7 +41,7 @@ public class NotaController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/usuario/{usuarioId}")
+    @GetMapping("/usuarios/{usuarioId}")
     public ResponseEntity<List<Nota>> getNotasByUsuarioId(@PathVariable @Positive Long usuarioId) {
         return ResponseEntity.ok(notaSvc.getNotasByUsuarioId(usuarioId));
     }
