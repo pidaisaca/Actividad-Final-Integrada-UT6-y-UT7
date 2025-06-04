@@ -1,5 +1,6 @@
 package com.tuapp.notasapi.service;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,15 +28,23 @@ public class NotaService {
         return notaRepository.findById(id);
     }
 
+    @Transactional(readOnly = true)
+    public List<Nota> getNotasByUsuarioId(Long usuarioId) {
+        return notaRepository.findByUsuario_Id(usuarioId, Sort.by("fechaCreacion").descending());
+    }
+
+    @Transactional
     public Nota saveNota(Nota e) {
         return notaRepository.save(e);
     }
 
+    @Transactional
     public Nota updateNota(Long id, Nota e) {
         e.setId(id);
         return notaRepository.save(e);
     }
 
+    @Transactional
     public void deleteNota(Long id) {
         notaRepository.deleteById(id);
     }

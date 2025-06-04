@@ -41,6 +41,11 @@ public class NotaController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/usuario/{usuarioId}")
+    public ResponseEntity<List<Nota>> getNotasByUsuarioId(@PathVariable @Positive Long usuarioId) {
+        return ResponseEntity.ok(notaSvc.getNotasByUsuarioId(usuarioId));
+    }
+
     @PostMapping
     public ResponseEntity<Nota> saveNota(@Valid @RequestBody Nota n) {
         Nota createdNota = notaSvc.saveNota(n);
@@ -48,7 +53,7 @@ public class NotaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Nota> updateNota(@PathVariable @Positive Long id, @Valid @RequestBody Nota n){
+    public ResponseEntity<Nota> updateNota(@PathVariable @Positive Long id, @Valid @RequestBody Nota n) {
         return notaSvc.getNotaById(id).map(existing -> {
             Nota updatedNota = notaSvc.updateNota(id, n);
             return ResponseEntity.ok(updatedNota);
