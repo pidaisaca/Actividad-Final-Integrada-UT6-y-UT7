@@ -1,0 +1,21 @@
+CRUD:
+
+    Notas:
+        -Crear ✔
+        -Leer ✔
+        -Actualizar ✔
+        -Eliminar ✔
+        -Eliminar Huerfano ✔
+
+    Usuario:
+        -Crear ✔
+        -Leer ✔
+        -Actualizar ✔
+        -Eliminar ✔
+
+Otros Requisitos:
+    -Implementar Interfaz Genérica ¿✔?
+    -Mostrar las notas pertenecientes a un Usuario ✔
+    -UsuarioService extends CrudService<Usuario, Long>
+    -NotaService extends CrudService<Nota, Long>
+        (Ambas implementadas mediante UsuarioServiceImpl y NotaServiceImpl extendiendo AbstractCrudService.)
