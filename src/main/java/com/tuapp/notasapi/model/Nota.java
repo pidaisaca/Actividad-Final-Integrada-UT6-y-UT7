@@ -2,9 +2,11 @@ package com.tuapp.notasapi.model;
 
 
 import jakarta.persistence.*;
-import java.util.Objects;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
+
 
 @Entity
 @Table(name = "notas")
@@ -20,6 +22,7 @@ public class Nota {
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
+    @NotNull(message = "El usuario no puede ser nulo")
     private Usuario usuario;
 
 
@@ -32,6 +35,13 @@ public class Nota {
         this.fechaCreacion = fechaCreacion;
     }
 
+    @PrePersist
+    public void onCreate() {
+        if (fechaCreacion == null) {
+            fechaCreacion = LocalDateTime.now();
+        }
+    }
+    
     public Long getId() {
         return id;
     }

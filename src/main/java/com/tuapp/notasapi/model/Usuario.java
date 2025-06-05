@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "usuarios")
@@ -70,18 +71,16 @@ public class Usuario {
     public void setEmail(String email) {
         this.email = email;
     }
-
+    @JsonProperty("password")
     public void setPassword(String password) {
         // Utilizar un algoritmo de hash para convertir la contraseña en un hash
-        MessageDigest md = null;
         try {
-            md = MessageDigest.getInstance("SHA-256");
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        byte[] hashBytes = md.digest(password.getBytes(StandardCharsets.UTF_8));
+        this.passwordHash = bytesToHex(hashBytes);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-        byte[] hashBytes = md.digest(password.getBytes(StandardCharsets.UTF_8));
-        String hashedPassword = bytesToHex(hashBytes);
-        this.passwordHash = hashedPassword;
     }
 
     public String getPasswordHash() {

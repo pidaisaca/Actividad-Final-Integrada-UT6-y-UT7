@@ -20,6 +20,9 @@ public class UsuarioService extends AbstractCrudService<Usuario, Long> {
     }
 
     public Usuario save(Usuario usuario) {
+        if(usuario.getPasswordHash() != null && !usuario.getPasswordHash().isEmpty()){
+            usuario.setPassword(usuario.getPasswordHash());
+        }
         return repository.save(usuario);
     }
 
@@ -39,10 +42,11 @@ public class UsuarioService extends AbstractCrudService<Usuario, Long> {
 
     public Usuario update(Long id, Usuario usuario) {
         return repository.findById(id).map(a -> {
-            usuario.setPassword(a.getPasswordHash());
             a.setnombre(usuario.getnombre());
             a.setEmail(usuario.getEmail());
+            if(usuario.getPasswordHash() != null && !usuario.getPasswordHash().isEmpty()){
             a.setPassword(usuario.getPasswordHash());
+        }
             return repository.save(a);
         }).orElseGet(() -> {
             usuario.setId(id);

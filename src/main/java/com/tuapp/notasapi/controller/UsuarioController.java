@@ -65,7 +65,7 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUsuario(Long id) {
+    public void deleteUsuario(@PathVariable Long id) {
         log.info("Eliminando usuario con id: {}", id);
         log.debug("DELETE /api/v1/usuarios/{}", id);
         usuarioService.delete(id);
