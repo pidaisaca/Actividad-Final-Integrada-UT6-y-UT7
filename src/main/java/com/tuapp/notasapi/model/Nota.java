@@ -7,17 +7,27 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 
 @Entity
 @Table(name = "notas")
+@JsonPropertyOrder({"id", "titulo", "contenido", "fechaCreacion", "usuario"})
 public class Nota {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @JsonProperty("id")
+    private Long id_nota;
 
     private String titulo;
     private String contenido;
+
+    @CreateTimestamp
+    @Column(name = "fecha_creacion")
+    @JsonInclude(JsonInclude.Include.ALWAYS)
     private LocalDateTime fechaCreacion;
 
     @ManyToOne
@@ -29,11 +39,13 @@ public class Nota {
     public Nota() {
     }
 
-    public Nota(String titulo, String contenido, LocalDateTime fechaCreacion) {
+    public Nota(String titulo, String contenido, LocalDateTime fechaCreacion, Usuario usuario) {
         this.titulo = titulo;
         this.contenido = contenido;
         this.fechaCreacion = fechaCreacion;
+        this.usuario = usuario;
     }
+
 
     @PrePersist
     public void onCreate() {
@@ -43,11 +55,11 @@ public class Nota {
     }
     
     public Long getId() {
-        return id;
+        return id_nota;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.id_nota = id;
     }
 
     public String getTitulo() {
@@ -86,11 +98,11 @@ public class Nota {
         if (this == o) return true;
         if (!(o instanceof Nota)) return false;
         Nota nota = (Nota) o;
-        return Objects.equals(id, nota.id);
+        return Objects.equals(id_nota, nota.id_nota);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id_nota);
     }
 }

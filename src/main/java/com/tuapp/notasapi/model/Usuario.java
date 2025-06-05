@@ -41,11 +41,12 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(Long id, String nombre, String email, String password) {
+    public Usuario(Long id, String nombre, String email, String password, Nota notas) {
         this.id = id;
         this.nombre = nombre;
         this.email = email;
         setPassword(password);
+        this.notas = new ArrayList<>();
     }
 
     public Long getId() {
