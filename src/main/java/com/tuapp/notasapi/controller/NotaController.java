@@ -2,6 +2,7 @@ package com.tuapp.notasapi.controller;
 
 import java.util.List;
 
+import org.apache.logging.log4j.util.PropertySource.Comparator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -19,6 +20,8 @@ import com.tuapp.notasapi.service.NotaService;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping({ "api/v1/notas" })
@@ -34,6 +37,7 @@ public class NotaController {
     public ResponseEntity<List<Nota>> getAllNotas() {
         return ResponseEntity.ok(notaSvc.getAllNotas());
     }
+    
 
     @GetMapping("/{id}")
     public ResponseEntity<Nota> getNotaById(@PathVariable @Positive Long id) {
@@ -41,10 +45,22 @@ public class NotaController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/usuarios/{usuarioId}")
-    public ResponseEntity<List<Nota>> getNotasByUsuarioId(@PathVariable @Positive Long usuarioId) {
-        return ResponseEntity.ok(notaSvc.getNotasByUsuarioId(usuarioId));
-    }
+   @GetMapping("/usuarios/{usuarioId}")
+   public ResponseEntity<List<Nota>> getNotasByUsuarioId(
+           @PathVariable @Positive Long usuarioId,
+           @RequestParam(defaultValue = "id,asc") String sort) {
+       List<Nota> notas = notaSvc.getNotasByUsuarioId(usuarioId);
+       notas.sort((n1, n2) -> {
+           if (sort.equals("id,asc")) {
+               return Long.compare(n1.getId(), n2.getId());
+           } else if (sort.equals("id,desc")) {
+               return Long.compare(n2.getId(), n1.getId());
+           } else {
+               return 0;
+           }
+       });
+       return ResponseEntity.ok(notas);
+   }
 
     @PostMapping
     public ResponseEntity<Nota> saveNota(@Valid @RequestBody Nota n) {
