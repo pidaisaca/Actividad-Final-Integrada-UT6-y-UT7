@@ -3,7 +3,22 @@ API REST en Java + Spring Boot que permite gestionar Usuarios y sus Notas de for
 
 
 ## Estructura del proyecto
+La aplicación se encuentra dentro de 
 
+## biblioteca/src/main/java/com/tuapp/notasapi
+![alt text](imag/Estructura.png)
+
+
+Dentro están los siguientes paquetes:
+
+# Controller
+Paquete que contiene las clases NotaController.java y UsuarioController.java
+# Model
+Paquete que con los datos de las entidades Nota y Usuario. Contiene Nota.java y Usuario.java
+# Repository
+Interfaz para acceder a la base de datos. Contiene NotaRepository.java y UsuarioRepository.java
+# Service
+Capa intermedia entre la API y los datos. Contiene NotaService.java y UsuarioService.java
 
 ## Requisitos de uso
 
