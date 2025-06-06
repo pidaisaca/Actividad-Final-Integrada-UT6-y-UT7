@@ -72,6 +72,7 @@ Capa intermedia entre la API y los datos. Contiene NotaService.java y UsuarioSer
    ![alt text](imag/GET_id-Nota.png)
 
    #### POST /notas
+   Crear una nueva nota
    ![alt text](imag/POST-Notas.png)
 
    #### PUT /notas/{id}
