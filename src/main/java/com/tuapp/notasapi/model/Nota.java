@@ -19,13 +19,13 @@ public class Nota {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     @JsonProperty("id")
     private Long id_nota;
 
     private String titulo;
     private String contenido;
 
-    @CreateTimestamp
     @Column(name = "fecha_creacion")
     @JsonInclude(JsonInclude.Include.ALWAYS)
     private LocalDateTime fechaCreacion;
