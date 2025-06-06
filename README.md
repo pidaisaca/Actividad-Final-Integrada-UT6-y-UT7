@@ -71,6 +71,9 @@ Capa intermedia entre la API y los datos. Contiene NotaService.java y UsuarioSer
    Obtener una nota concreta por su ID
    ![alt text](imag/GET_id-Nota.png)
 
+   #### POST /notas
+   ![alt text](imag/POST-Notas.png)
+
    #### PUT /notas/{id}
    Cambiar el valor de un campo de la nota
    ![alt text](imag/PUT-Notas.png)
